@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.networkzero.net.LoopbackRoomSolveTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-26T09:23:04.305Z" hostname="LAPTOP-FDPH024O" time="1.273">
+  <properties/>
+  <testcase name="twoPeersCompleteRoomThreeThroughHostValidatedIntents()" classname="com.networkzero.net.LoopbackRoomSolveTest" time="0.73"/>
+  <testcase name="twoPeersCompleteRoomOneFromHostState()" classname="com.networkzero.net.LoopbackRoomSolveTest" time="0.514"/>
+  <system-out><![CDATA[00:00  INFO: [kryonet] Server opened.
+00:00  INFO: Connecting: /127.0.0.1:54555/54777
+00:00  INFO: [kryonet] Connection 1 connected: /127.0.0.1
+00:00  INFO: [kryonet] Connection 1 connected: /127.0.0.1
+00:00  INFO: [kryonet] Connection 1 disconnected.
+00:00  INFO: [kryonet] Connection 1 disconnected.
+00:00  INFO: [kryonet] Server closed.
+00:00  INFO: [kryonet] Server opened.
+00:00  INFO: Connecting: /127.0.0.1:54555/54777
+00:00  INFO: [kryonet] Connection 1 connected: /127.0.0.1
+00:00  INFO: [kryonet] Connection 1 connected: /127.0.0.1
+00:01  INFO: [kryonet] Connection 1 disconnected.
+00:01  INFO: [kryonet] Connection 1 disconnected.
+00:01  INFO: [kryonet] Server closed.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

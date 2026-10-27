@@ -1,0 +1,9 @@
+{
+  "P1":["Check the workbench for tools and parts.","You need the crimping tool, the connector box and the cable coil.","Click each of the three items to pick them up."],
+  "P2":["The notebook on the workbench holds important notes.","Open the logbook and read both pages.","Page 1 is the wire order, page 2 lists the port links."],
+  "P3":["Use the wire order from the logbook at the workbench.","Click two wires to swap them until they match the logbook.","Order: White-Orange, Orange, White-Green, Blue, White-Blue, Green, White-Brown, Brown."],
+  "P4":["The rack needs a cable from the workbench.","Connect the ports listed on the logbook's second page.","Links: 1-5, 2-3, 4-6, 7-8."],
+  "P6":["The notice board holds a sketch of the network.","Place the devices to match the sketch: router on top, then switch, then two PCs.","A=Router, B=Switch, C=PC1, D=PC3."],
+  "P7":["The notice board has a sticky note with settings for PC3.","Set ip, mask and gateway, then ping the gateway.","set ip 192.168.1.30, set mask 255.255.255.0, set gateway 192.168.1.1, then ping 192.168.1.1."],
+  "P8":["The code uses digits from three places.","Whiteboard left digit, then 7 from the email, then the whiteboard right digit, then the router NODE ID.","The code is 2791."]
+}

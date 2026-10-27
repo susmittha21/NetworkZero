@@ -1,0 +1,56 @@
+{
+  "sourceWidth": 1376,
+  "sourceHeight": 768,
+  "letterboxRatio": 0.12,
+  "filmGrain": false,
+  "vignette": false,
+  "panels": [
+    {
+      "id": "campus",
+      "image": "story/panels/panel_1.png",
+      "text": ["COMPUTER SCIENCE DEPARTMENT.", "11:47 PM. FINALS WEEK.", "MOST OF THE CAMPUS HAS GONE HOME."],
+      "camera": {"startZoom": 1.0, "endZoom": 1.025, "startPan": [0, 0], "endPan": [8, -3], "duration": 16},
+      "effects": ["rain"],
+      "musicCue": "story_music"
+    },
+    {
+      "id": "lab",
+      "image": "landing/landing_bg.png",
+      "text": ["IN THE NETWORKING LAB, TWO STUDENTS ARE STILL AT WORK.", "ONE LAST LAB SESSION BEFORE THE EXAM."],
+      "camera": {"startZoom": 1.0, "endZoom": 1.02, "startPan": [-4, 0], "endPan": [5, 0], "duration": 18},
+      "effects": ["rain_window"],
+      "rainRegion": [1170, 20, 206, 420],
+      "rainWind": 12,
+      "musicCue": "story_music"
+    },
+    {
+      "id": "red_screen",
+      "image": "story/panels/panel_2.png",
+      "text": ["THEN EVERY SCREEN TURNS RED."],
+      "camera": {"startZoom": 1.0, "endZoom": 1.035, "startPan": [0, 0], "endPan": [2, 0], "duration": 10},
+      "effects": ["screen_text"],
+      "screenText": {"x": 210, "y": 280, "width": 310, "height": 240, "headline": "WORM DETECTED", "subline": "NETWORK LOCKED"},
+      "musicCue": "alarm"
+    },
+    {
+      "id": "locked_doors",
+      "image": "story/panels/panel_3.png",
+      "text": ["THE BUILDING'S DOORS DEPEND ON THE NETWORK.", "WHEN THE NETWORK DIES, THE DOORS LOCK.", "EVERY EXIT IS SEALED."],
+      "camera": {"startZoom": 1.0, "endZoom": 1.025, "startPan": [0, 0], "endPan": [8, 2], "duration": 16},
+      "effects": ["rain"],
+      "musicCue": "alarm"
+    },
+    {
+      "id": "last_lab",
+      "image": "story/backgrounds/bg.png",
+      "text": ["EMERGENCY LIGHTS. NO SIGNAL. NO WAY OUT.", "THE ONLY WAY OUT IS TO RESTORE THE NETWORK, ROOM BY ROOM."],
+      "camera": {"startZoom": 1.0, "endZoom": 1.03, "startPan": [0, 0], "endPan": [0, 4], "duration": 17},
+      "effects": [],
+      "musicCue": "story_music"
+    }
+  ],
+  "titleCard": {
+    "text": ["RESTORE THE NETWORK.", "ESCAPE BEFORE THE LOCKDOWN COMPLETES."],
+    "prompt": "PRESS SPACE TO BEGIN"
+  }
+}

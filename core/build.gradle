@@ -1,0 +1,11 @@
+dependencies {
+    api 'com.badlogicgames.gdx:gdx:1.12.1'
+    api 'com.badlogicgames.gdx:gdx-freetype:1.12.1'
+    api 'com.google.code.gson:gson:2.11.0'
+    api 'com.esotericsoftware:kryonet:2.22.0-RC1'
+    implementation 'org.xerial:sqlite-jdbc:3.46.1.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+}
+sourceSets.main.resources.srcDirs = ['../assets']
+tasks.withType(Test).configureEach { useJUnitPlatform() }

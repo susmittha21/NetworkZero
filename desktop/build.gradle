@@ -1,0 +1,16 @@
+apply plugin: 'application'
+dependencies {
+    implementation project(':core')
+    implementation 'com.badlogicgames.gdx:gdx-backend-lwjgl3:1.12.1'
+    runtimeOnly 'com.badlogicgames.gdx:gdx-platform:1.12.1:natives-desktop'
+    runtimeOnly 'com.badlogicgames.gdx:gdx-freetype-platform:1.12.1:natives-desktop'
+}
+application { mainClass = 'com.networkzero.desktop.DesktopLauncher' }
+
+tasks.register('runClient', JavaExec) {
+    group = 'application'
+    description = 'Runs a second NETWORK ZERO instance with an isolated client profile.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = application.mainClass
+    args '--profile=client'
+}

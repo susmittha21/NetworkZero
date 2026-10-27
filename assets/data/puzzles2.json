@@ -1,0 +1,11 @@
+{
+  "cabinetCode": "317",
+  "logSource": "10.20.30.77",
+  "differentPorts": 7,
+  "tamperedCamera": 6,
+  "servicePorts": {"SSH":"22","HTTPS":"443","DNS":"53","FTP":"21","SMTP":"25","RDP":"3389"},
+  "serviceOrder": ["SSH","HTTPS","DNS","FTP","SMTP","RDP"],
+  "portOrder": ["3389","21","443","53","25","22"],
+  "cameraTimes": ["03:17:41","03:17:41","03:17:42","03:17:41","03:17:42","03:02:11","03:17:41","03:17:42","03:17:41"],
+  "doorCode": "6742"
+}

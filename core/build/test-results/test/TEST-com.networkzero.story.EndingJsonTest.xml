@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.networkzero.story.EndingJsonTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-26T09:23:05.621Z" hostname="LAPTOP-FDPH024O" time="0.021">
+  <properties/>
+  <testcase name="testEndingJsonLoader()" classname="com.networkzero.story.EndingJsonTest" time="0.02"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

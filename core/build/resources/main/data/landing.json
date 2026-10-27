@@ -1,0 +1,13 @@
+{
+  "sourceWidth": 1376,
+  "sourceHeight": 768,
+  "monitors": [[640,395],[1062,395],[818,555],[1225,555]],
+  "lamp": [1090,520],
+  "rack": [830,290,150,220],
+  "rainWindow": [1170,20,206,420],
+  "parallaxAmplitude": 12,
+  "parallaxPeriodSeconds": 20,
+  "scanlines": false,
+  "menuX": 115,
+  "menuY": 360
+}

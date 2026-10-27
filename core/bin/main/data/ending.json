@@ -1,0 +1,85 @@
+{
+  "sourceWidth": 1920,
+  "sourceHeight": 1080,
+  "letterboxRatio": 0.12,
+  "filmGrain": true,
+  "vignette": true,
+  "panels": [
+    {
+      "id": "end1",
+      "image": "story/end_panel_1.png",
+      "text": [
+        "THE EXIT DOOR RELEASES.",
+        "FOR THE FIRST TIME TONIGHT, THE LOCK DOES NOT HOLD."
+      ],
+      "camera": {
+        "startZoom": 1.00,
+        "endZoom": 1.10,
+        "startPan": [0, 0],
+        "endPan": [60, -10],
+        "duration": 14
+      },
+      "audioCues": [
+        { "line": 0, "sound": "audio/door_open.ogg" }
+      ]
+    },
+    {
+      "id": "end2",
+      "image": "story/end_panel_2.png",
+      "text": [
+        "ONE BY ONE, THE DOORS UNLOCK.",
+        "THE NETWORK IS ALIVE AGAIN.",
+        "THE LIGHTS COME BACK ON."
+      ],
+      "camera": {
+        "startZoom": 1.04,
+        "endZoom": 1.08,
+        "startPan": [-40, 0],
+        "endPan": [40, 0],
+        "duration": 16
+      },
+      "audioCues": [
+        { "line": 1, "sound": "audio/power_up.ogg" }
+      ]
+    },
+    {
+      "id": "end3",
+      "image": "story/end_panel_3.png",
+      "text": [
+        "THE WORM IS ISOLATED.",
+        "THE RED SCREENS FADE TO BLUE.",
+        "IT WAS ONLY EVER ONE LAST LAB SESSION."
+      ],
+      "camera": {
+        "startZoom": 1.00,
+        "endZoom": 1.10,
+        "startPan": [0, 0],
+        "endPan": [-40, 10],
+        "duration": 15
+      }
+    },
+    {
+      "id": "end5",
+      "image": "story/end_panel_5.png",
+      "text": [
+        "BY DAWN, THE DEPARTMENT IS QUIET AGAIN.",
+        "NOBODY WILL KNOW HOW CLOSE IT CAME."
+      ],
+      "camera": {
+        "startZoom": 1.10,
+        "endZoom": 1.00,
+        "startPan": [0, -15],
+        "endPan": [0, 15],
+        "duration": 18
+      }
+    }
+  ],
+  "titleCard": {
+    "text": [
+      "NETWORK RESTORED.",
+      "THE LAST LAB SESSION IS OVER."
+    ],
+    "prompt": "PRESS SPACE TO CONTINUE"
+  }
+}
+

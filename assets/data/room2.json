@@ -1,0 +1,31 @@
+{
+  "imageWidth": 1376,
+  "imageHeight": 768,
+  "background": "controls/control_bg.png",
+  "onlineBackground": "controls/control_online_bg.png",
+  "isFinal": true,
+  "clueOwners": {"bookshelf":"host", "incident_board":"client"},
+  "objects": [
+    {"id":"bookshelf","name":"Bookshelf","x":0.018,"y":0.306,"w":0.171,"h":0.554,"description":"Binders of manuals."},
+    {"id":"boxes","name":"Storage Boxes","x":0.032,"y":0.160,"w":0.139,"h":0.140,"description":"Spare cable boxes. All empty."},
+    {"id":"plant","name":"Plant","x":0.003,"y":0.690,"w":0.053,"h":0.190,"description":"It needs water. So does the water cooler's owner."},
+    {"id":"filing_a","name":"Log Archive","x":0.174,"y":0.440,"w":0.065,"h":0.420},
+    {"id":"filing_b","name":"Locked Cabinet","x":0.239,"y":0.440,"w":0.066,"h":0.420},
+    {"id":"filing_c","name":"Service Register","x":0.306,"y":0.440,"w":0.075,"h":0.420},
+    {"id":"cctv_camera","name":"Camera","x":0.314,"y":0.075,"w":0.049,"h":0.073,"description":"Its feed was cut."},
+    {"id":"cctv_wall","name":"Monitor Wall","x":0.391,"y":0.180,"w":0.295,"h":0.357},
+    {"id":"desk_lamp","name":"Desk Lamp","x":0.405,"y":0.507,"w":0.049,"h":0.126,"description":"A desk lamp, still warm."},
+    {"id":"phone","name":"Phone","x":0.643,"y":0.586,"w":0.051,"h":0.065,"description":"The phone line is dead."},
+    {"id":"chair","name":"Office Chair","x":0.522,"y":0.556,"w":0.103,"h":0.367,"description":"Someone left in a hurry."},
+    {"id":"pc","name":"Control Terminal","x":0.701,"y":0.521,"w":0.075,"h":0.131},
+    {"id":"incident_board","name":"Incident Board","x":0.698,"y":0.315,"w":0.153,"h":0.187,"description":"Papers pinned with string."},
+    {"id":"water_cooler","name":"Water Cooler","x":0.796,"y":0.516,"w":0.066,"h":0.344,"description":"Empty. It will not help."},
+    {"id":"wall_clock","name":"Wall Clock","x":0.867,"y":0.315,"w":0.051,"h":0.091},
+    {"id":"extinguisher","name":"Fire Extinguisher","x":0.871,"y":0.428,"w":0.040,"h":0.135,"description":"Not needed. The danger here is digital."},
+    {"id":"exit_sign","name":"Exit Sign","x":0.942,"y":0.219,"w":0.058,"h":0.079,"description":"The exit sign is lit. The door is not."},
+    {"id":"exit_door","name":"Exit Door","x":0.933,"y":0.315,"w":0.067,"h":0.521},
+    {"id":"alarm_1","name":"Alarm Light","x":0.194,"y":0.105,"w":0.036,"h":0.058},
+    {"id":"alarm_2","name":"Alarm Light","x":0.525,"y":0.105,"w":0.034,"h":0.058},
+    {"id":"alarm_3","name":"Alarm Light","x":0.844,"y":0.105,"w":0.035,"h":0.058}
+  ]
+}

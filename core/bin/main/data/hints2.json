@@ -1,0 +1,8 @@
+{
+  "P1": ["The wall clock stopped at the moment of the attack.","Read the time on the clock. The locked cabinet takes three digits.","The clock shows 03:17. Enter 317."],
+  "P2": ["Someone is scanning the server. The log archive shows who.","A scan sends SYN-only packets to many different ports. Find the source that does this and count its different ports.","The attacker is 10.20.30.77 and it probed 7 different ports."],
+  "P3": ["The service register needs port numbers. The handbook on the bookshelf lists them.","Click a service, then click its port. CHECK shows how many are right.","SSH 22, HTTPS 443, DNS 53, FTP 21, SMTP 25, RDP 3389."],
+  "P4": ["One camera feed is a replayed loop. Compare the camera clocks to the server time.","The server time is on the incident board. Find the feed that disagrees.","Camera 6 is the tampered feed."],
+  "P5": ["The control terminal needs the operator keycard.","Finish the log analysis, the camera check and the service register first. Then block the attacker and release the lockdown.","block 10.20.30.77, then release. The release token is 2."],
+  "P6": ["The exit code uses four facts you have found.","In order: the tampered camera, the ports probed, the authorisation digit, the release token.","The code is 6742."]
+}

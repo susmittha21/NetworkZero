@@ -1,0 +1,10 @@
+core/build/libs/core.jar filter=lfs diff=lfs merge=lfs -text
+assets/audio/rain_loop_original_24bit.wav filter=lfs diff=lfs merge=lfs -text
+assets/audio/rain_loop.wav filter=lfs diff=lfs merge=lfs -text
+assets/audio/story_music.wav filter=lfs diff=lfs merge=lfs -text
+core/bin/main/audio/rain_loop_original_24bit.wav filter=lfs diff=lfs merge=lfs -text
+core/bin/main/audio/rain_loop.wav filter=lfs diff=lfs merge=lfs -text
+core/bin/main/audio/story_music.wav filter=lfs diff=lfs merge=lfs -text
+core/build/resources/main/audio/rain_loop_original_24bit.wav filter=lfs diff=lfs merge=lfs -text
+core/build/resources/main/audio/rain_loop.wav filter=lfs diff=lfs merge=lfs -text
+core/build/resources/main/audio/story_music.wav filter=lfs diff=lfs merge=lfs -text
