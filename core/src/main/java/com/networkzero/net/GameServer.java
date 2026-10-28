@@ -15,6 +15,7 @@ public final class GameServer implements AutoCloseable {
     public interface Handler { void onConnected(String player); void onMessage(Object message); void onDisconnected(String player); }
     private final Server server=Network.newServer();
     private final String hostName;
+    private final int tcpPort,udpPort;
     private final Supplier<GameState> state;
     private final Handler handler;
     private volatile Connection peer;
@@ -24,7 +25,8 @@ public final class GameServer implements AutoCloseable {
     private final AtomicLong pingMs=new AtomicLong();
     private long lastSync;
 
-    public GameServer(String hostName,Supplier<GameState> state,Handler handler){this.hostName=hostName;this.state=state;this.handler=handler;}
+    public GameServer(String hostName,Supplier<GameState> state,Handler handler){this(hostName,Network.TCP_PORT,Network.UDP_PORT,state,handler);}
+    public GameServer(String hostName,int tcpPort,int udpPort,Supplier<GameState> state,Handler handler){this.hostName=hostName;this.tcpPort=tcpPort;this.udpPort=udpPort;this.state=state;this.handler=handler;}
     public synchronized void start() throws IOException {
         server.addListener(new Listener(){
             @Override public void connected(Connection c){ synchronized(GameServer.this){if(peer!=null){c.sendTCP(new Network.Reject("Game is full"));c.close();return;}peer=c;} }
@@ -40,7 +42,7 @@ public final class GameServer implements AutoCloseable {
             }
             @Override public void disconnected(Connection c){String name; synchronized(GameServer.this){if(c!=peer)return;name=peerName;peer=null;welcomed=false;}post(()->handler.onDisconnected(name));}
         });
-        server.start();server.bind(Network.TCP_PORT,Network.UDP_PORT);
+        server.start();server.bind(tcpPort,udpPort);
     }
     private static String safeName(String n,String fallback){if(n==null)return fallback;String s=n.replaceAll("[\\p{Cntrl}]","").trim();if(s.isEmpty())return fallback;return s.substring(0,Math.min(16,s.length()));}
     private static void post(Runnable r){if(Gdx.app!=null)Gdx.app.postRunnable(r);else r.run();}

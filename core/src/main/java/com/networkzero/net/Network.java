@@ -18,6 +18,46 @@ public final class Network {
     public static final Gson JSON = new Gson();
     private Network() {}
 
+    public record Endpoint(String host, int tcpPort) {}
+
+    public static Endpoint parseEndpoint(String address) {
+        if (address == null || address.isBlank()) throw new IllegalArgumentException("Enter a host IP address.");
+        String value = address.trim();
+        String host;
+        int port = TCP_PORT;
+        if (value.startsWith("[")) {
+            int closing = value.indexOf(']');
+            if (closing <= 1) throw new IllegalArgumentException("Invalid bracketed host address.");
+            host = value.substring(1, closing);
+            String suffix = value.substring(closing + 1);
+            if (!suffix.isEmpty()) {
+                if (!suffix.startsWith(":")) throw new IllegalArgumentException("Use host:port for the host address.");
+                port = parsePort(suffix.substring(1));
+            }
+        } else {
+            int firstColon = value.indexOf(':');
+            int lastColon = value.lastIndexOf(':');
+            if (firstColon >= 0 && firstColon == lastColon) {
+                host = value.substring(0, firstColon);
+                port = parsePort(value.substring(firstColon + 1));
+            } else {
+                host = value;
+            }
+        }
+        if (host.isBlank() || host.chars().anyMatch(Character::isWhitespace))
+            throw new IllegalArgumentException("Enter a valid host IP address.");
+        return new Endpoint(host, port);
+    }
+
+    private static int parsePort(String value) {
+        try {
+            int port = Integer.parseInt(value);
+            if (port >= 1 && port <= 65535) return port;
+        } catch (NumberFormatException ignored) {
+        }
+        throw new IllegalArgumentException("Port must be a number from 1 to 65535.");
+    }
+
     public static void register(Kryo kryo) {
         kryo.register(Hello.class); kryo.register(Welcome.class); kryo.register(Reject.class);
         kryo.register(Intent.class); kryo.register(Intent.Type.class); kryo.register(Chat.class);

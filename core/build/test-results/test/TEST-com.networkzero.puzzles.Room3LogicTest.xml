@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.networkzero.puzzles.Room3LogicTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-26T09:23:05.581Z" hostname="LAPTOP-FDPH024O" time="0.034">
+<testsuite name="com.networkzero.puzzles.Room3LogicTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-28T10:58:52.691Z" hostname="LAPTOP-FDPH024O" time="0.042">
   <properties/>
-  <testcase name="terminalValidatesEveryBlockAndReleaseGate()" classname="com.networkzero.puzzles.Room3LogicTest" time="0.001"/>
-  <testcase name="cctvFlagValidatesTamperedCameraAndRejectsOthers()" classname="com.networkzero.puzzles.Room3LogicTest" time="0.004"/>
-  <testcase name="room3IntentFlowValidatesDialLocksAndDualConfirmation()" classname="com.networkzero.puzzles.Room3LogicTest" time="0.002"/>
+  <testcase name="terminalValidatesEveryBlockAndReleaseGate()" classname="com.networkzero.puzzles.Room3LogicTest" time="0.004"/>
+  <testcase name="cctvFlagValidatesTamperedCameraAndRejectsOthers()" classname="com.networkzero.puzzles.Room3LogicTest" time="0.001"/>
+  <testcase name="room3IntentFlowValidatesDialLocksAndDualConfirmation()" classname="com.networkzero.puzzles.Room3LogicTest" time="0.001"/>
   <testcase name="registerAndCameraOnlyAcceptExpectedAnswer()" classname="com.networkzero.puzzles.Room3LogicTest" time="0.001"/>
   <testcase name="packetLogChecksIpAndTrimmedDistinctPortCount()" classname="com.networkzero.puzzles.Room3LogicTest" time="0.001"/>
-  <testcase name="finalProgressFileMarksTheGameComplete(Path)" classname="com.networkzero.puzzles.Room3LogicTest" time="0.015"/>
+  <testcase name="finalProgressFileMarksTheGameComplete(Path)" classname="com.networkzero.puzzles.Room3LogicTest" time="0.019"/>
   <testcase name="clueOwnershipIsConfiguredByRoleAndSoloHasFullAccess()" classname="com.networkzero.puzzles.Room3LogicTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

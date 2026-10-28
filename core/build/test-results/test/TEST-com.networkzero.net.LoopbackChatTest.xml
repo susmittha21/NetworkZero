@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.networkzero.net.LoopbackChatTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-28T10:58:51.272Z" hostname="LAPTOP-FDPH024O" time="0.26">
+  <properties/>
+  <testcase name="relaysChatBetweenLanPeers()" classname="com.networkzero.net.LoopbackChatTest" time="0.233"/>
+  <system-out><![CDATA[00:00  INFO: [kryonet] Server opened.
+00:00  INFO: Connecting: /127.0.0.1:55154/58695
+00:00  INFO: [kryonet] Connection 1 connected: /127.0.0.1
+00:00  INFO: [kryonet] Connection 1 connected: /127.0.0.1
+00:00  INFO: [kryonet] Connection 1 disconnected.
+00:00  INFO: [kryonet] Connection 1 disconnected.
+00:00  INFO: [kryonet] Server closed.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

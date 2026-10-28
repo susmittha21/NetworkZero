@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.networkzero.story.StoryDataLoadTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-26T09:23:05.643Z" hostname="LAPTOP-FDPH024O" time="0.007">
+<testsuite name="com.networkzero.story.StoryDataLoadTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-28T10:58:52.770Z" hostname="LAPTOP-FDPH024O" time="0.016">
   <properties/>
-  <testcase name="testIntroLoadsFromStoryJsonAfterGeneralisation()" classname="com.networkzero.story.StoryDataLoadTest" time="0.006"/>
+  <testcase name="testIntroLoadsFromStoryJsonAfterGeneralisation()" classname="com.networkzero.story.StoryDataLoadTest" time="0.015"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

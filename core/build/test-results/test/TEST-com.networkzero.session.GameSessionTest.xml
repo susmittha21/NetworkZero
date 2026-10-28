@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.networkzero.session.GameSessionTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-26T09:23:05.617Z" hostname="LAPTOP-FDPH024O" time="0.004">
+<testsuite name="com.networkzero.session.GameSessionTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-28T10:58:52.735Z" hostname="LAPTOP-FDPH024O" time="0.007">
   <properties/>
   <testcase name="asymmetricCluesAreRoleSpecificAndCanBeDisabled()" classname="com.networkzero.session.GameSessionTest" time="0.001"/>
-  <testcase name="hostIntentMutatesStateOnce()" classname="com.networkzero.session.GameSessionTest" time="0.0"/>
-  <testcase name="puzzleLocksAreExclusiveAndReleased()" classname="com.networkzero.session.GameSessionTest" time="0.001"/>
+  <testcase name="hostIntentMutatesStateOnce()" classname="com.networkzero.session.GameSessionTest" time="0.001"/>
+  <testcase name="puzzleLocksAreExclusiveAndReleased()" classname="com.networkzero.session.GameSessionTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

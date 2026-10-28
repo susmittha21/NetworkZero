@@ -14,10 +14,10 @@ class LoopbackRoomSolveTest {
         GameState hostState=new GameState(),clientState=new GameState();hostState.beginRoom3();IntentHandler rules=new IntentHandler();CountDownLatch welcomed=new CountDownLatch(1);AtomicInteger syncs=new AtomicInteger();
         java.util.List<Network.GameEvent> hostEvents=new java.util.concurrent.CopyOnWriteArrayList<>();
         java.util.List<Network.GameEvent> clientEvents=new java.util.concurrent.CopyOnWriteArrayList<>();
-        GameServer server=new GameServer("Host",()->hostState,new GameServer.Handler(){public void onConnected(String p){}public void onDisconnected(String p){}public void onMessage(Object message){if(message instanceof Network.Intent i){IntentHandler.Result r=rules.apply(hostState,i,"Client");if(!r.event().isEmpty()){Network.GameEvent ev=new Network.GameEvent(r.event(),"Client");serverRef[0].send(ev);hostEvents.add(ev);}serverRef[0].sync();}}});serverRef[0]=server;
+        LoopbackPorts ports=LoopbackPorts.findAvailable();GameServer server=new GameServer("Host",ports.tcp(),ports.udp(),()->hostState,new GameServer.Handler(){public void onConnected(String p){}public void onDisconnected(String p){}public void onMessage(Object message){if(message instanceof Network.Intent i){IntentHandler.Result r=rules.apply(hostState,i,"Client");if(!r.event().isEmpty()){Network.GameEvent ev=new Network.GameEvent(r.event(),"Client");serverRef[0].send(ev);hostEvents.add(ev);}serverRef[0].sync();}}});serverRef[0]=server;
         GameClient client=new GameClient(new GameClient.Handler(){public void onDisconnected(){}public void onMessage(Object m){if(m instanceof Network.Welcome)welcomed.countDown();if(m instanceof Network.StateSync s){clientState.copyFrom(new Gson().fromJson(s.stateJson,GameState.class));syncs.incrementAndGet();}if(m instanceof Network.GameEvent e)clientEvents.add(e);}});
         try {
-            server.start();client.start();client.connect("127.0.0.1","Client",4000);assertTrue(welcomed.await(5,TimeUnit.SECONDS),"Room 3 handshake timed out");
+            server.start();client.start();client.connect("127.0.0.1",ports.tcp(),ports.udp(),"Client",4000);assertTrue(welcomed.await(5,TimeUnit.SECONDS),"Room 3 handshake timed out");
             send(client,hostState,clientState,syncs,intent(Network.Intent.Type.OPEN_PANEL,"cabinet"));
             for(int n=0;n<3;n++){Network.Intent dial=new Network.Intent(Network.Intent.Type.DIAL_SET);dial.i=n;dial.j=new int[]{3,1,7}[n];send(client,hostState,clientState,syncs,dial);}
             send(client,hostState,clientState,syncs,new Network.Intent(Network.Intent.Type.DRAWER_OPEN));send(client,hostState,clientState,syncs,new Network.Intent(Network.Intent.Type.TAKE_KEYCARD));send(client,hostState,clientState,syncs,intent(Network.Intent.Type.CLOSE_PANEL,"cabinet"));
@@ -45,10 +45,10 @@ class LoopbackRoomSolveTest {
     }
     @Test void twoPeersCompleteRoomOneFromHostState() throws Exception {
         GameState hostState=new GameState(),clientState=new GameState();IntentHandler rules=new IntentHandler();CountDownLatch welcomed=new CountDownLatch(1);AtomicInteger syncs=new AtomicInteger();
-        GameServer server=new GameServer("Host",()->hostState,new GameServer.Handler(){public void onConnected(String p){}public void onDisconnected(String p){}public void onMessage(Object message){if(message instanceof Network.Intent i){rules.apply(hostState,i,"Client");serverRef[0].sync();}}});serverRef[0]=server;
+        LoopbackPorts ports=LoopbackPorts.findAvailable();GameServer server=new GameServer("Host",ports.tcp(),ports.udp(),()->hostState,new GameServer.Handler(){public void onConnected(String p){}public void onDisconnected(String p){}public void onMessage(Object message){if(message instanceof Network.Intent i){rules.apply(hostState,i,"Client");serverRef[0].sync();}}});serverRef[0]=server;
         GameClient client=new GameClient(new GameClient.Handler(){public void onDisconnected(){}public void onMessage(Object m){if(m instanceof Network.Welcome)welcomed.countDown();if(m instanceof Network.StateSync s){clientState.copyFrom(new Gson().fromJson(s.stateJson,GameState.class));syncs.incrementAndGet();}}});
         try {
-            server.start();client.start();client.connect("127.0.0.1","Client",4000);assertTrue(welcomed.await(5,TimeUnit.SECONDS),"handshake timed out");
+            server.start();client.start();client.connect("127.0.0.1",ports.tcp(),ports.udp(),"Client",4000);assertTrue(welcomed.await(5,TimeUnit.SECONDS),"handshake timed out");
             send(client,hostState,clientState,syncs,intent(Network.Intent.Type.OPEN_PANEL,"crimp"));
             for(String id:new String[]{"crimper","rj45_box","cable_coil"})send(client,hostState,clientState,syncs,intent(Network.Intent.Type.PICK_UP,id));
             String[] target={"White-Orange","Orange","White-Green","Blue","White-Blue","Green","White-Brown","Brown"};

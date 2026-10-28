@@ -31,7 +31,14 @@ public final class GameClient implements AutoCloseable {
     private static void post(Runnable r){if(Gdx.app!=null)Gdx.app.postRunnable(r);else r.run();}
     public void start(){client.start();client.setTimeout(15000);}
     public void connect(String host,String name,int timeoutMs)throws IOException,InterruptedException{
-        client.connect(timeoutMs,host,Network.TCP_PORT,Network.UDP_PORT);client.setKeepAliveTCP(2000);client.setKeepAliveUDP(1000);
+        connect(host,Network.UDP_PORT,name,timeoutMs);
+    }
+    public void connect(String address,int udpPort,String name,int timeoutMs)throws IOException,InterruptedException{
+        Network.Endpoint endpoint=Network.parseEndpoint(address);
+        connect(endpoint.host(),endpoint.tcpPort(),udpPort,name,timeoutMs);
+    }
+    public void connect(String host,int tcpPort,int udpPort,String name,int timeoutMs)throws IOException,InterruptedException{
+        client.connect(timeoutMs,host,tcpPort,udpPort);client.setKeepAliveTCP(2000);client.setKeepAliveUDP(1000);
         client.sendTCP(new Network.Hello(Network.GAME_VERSION,name));
     }
     public boolean connected(){return client.isConnected();}

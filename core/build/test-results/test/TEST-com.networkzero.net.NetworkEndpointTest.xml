@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.networkzero.net.NetworkEndpointTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-28T10:58:52.653Z" hostname="LAPTOP-FDPH024O" time="0.036">
+  <properties/>
+  <testcase name="parsesBareHostAndAdvertisedHostWithPort()" classname="com.networkzero.net.NetworkEndpointTest" time="0.025"/>
+  <testcase name="rejectsInvalidPortsAndHosts()" classname="com.networkzero.net.NetworkEndpointTest" time="0.004"/>
+  <testcase name="parsesBracketedIpv6Address()" classname="com.networkzero.net.NetworkEndpointTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

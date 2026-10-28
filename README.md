@@ -23,7 +23,7 @@ Progress, settings, and SQLite hint history are stored under `~/.networkzero/` (
 
 ## LAN co-op
 
-Choose **New Game > Host Co-op (LAN)** on one computer. The host displays the LAN IPv4 address and TCP port `54555`. On the second computer choose **Join Co-op (LAN)**, select a discovered host or type its IP address, connect, and ready up. Both players must be ready before the host starts the story. The host is authoritative; puzzle actions and shared state are synchronized through KryoNet. Chat is available from the Room 1 bottom bar.
+Choose **New Game > Host Co-op (LAN)** on one computer. The host displays its LAN address, for example `10.10.123.206:54555`. On the second computer choose **Join Co-op (LAN)**, select a discovered host or type either the IP address alone or the complete `IP:port` shown by the host, then connect and ready up. Both computers must be on the same LAN; allow Java through the firewall on **Private networks**. Both players must be ready before the host starts the story. The host is authoritative; puzzle actions and shared state are synchronized through KryoNet. Chat is available from the Room 1 bottom bar.
 
 Allow Java through the firewall on **Private networks**. If prompted for manual rules, allow TCP `54555` and UDP `54777`.
 
@@ -134,5 +134,4 @@ The ending sequence reuses the core story engine (`StoryScreen`, `StoryDirector`
 - **F1**: Toggle debug overlay with live normalized mouse position.
 - **F2**: Live-reload `assets/data/ending.json` from disk and restart the current panel without restarting the game.
 - **F3**: Instantly skip to the next panel.
-
 
