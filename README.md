@@ -53,19 +53,19 @@ gradle test
 
 Press Start 2P is bundled at `assets/fonts/PressStart2P.ttf` under the SIL Open Font License; its license is in `assets/fonts/PressStart2P-OFL.txt`.
 
-## Room 3: Network Control Office
+## Room 2: Network Control Office
 
-The game has two rooms: Room 1 (Networking Laboratory) followed by Room 3 (Network Control Office), which is the final room. There is no Room 2. Room 1 completion records `room: 3`; Continue then resumes `saves/room3_state.json`. Finishing Room 3 records `room: "complete"` and disables Continue. Room 3 starts with a fresh 45 minute timer and ends at the Escape Complete screen.
+The game has two rooms: Room 1 (Networking Laboratory), followed by Room 2 (Network Control Office), which is the final room. Completing Room 1 records `room: 2`; Continue resumes Room 2 from `saves/room2_state.json`. Finishing Room 2 records `room: "complete"` and disables Continue. Room 2 starts with a fresh 45-minute timer and ends at the Escape Complete screen. Existing saves from earlier builds remain resumable.
 
-Room 3 uses the supplied `assets/controls/control_bg.png` and optional `assets/controls/control_online_bg.png`. The background is drawn in the fixed 1680×945 room view. Hotspot rectangles in `assets/data/room3.json` are normalized fractions from the source image's top-left; overlapping rectangles select the smallest area. The crop viewer converts those same source coordinates to the texture's bottom-left origin and keeps the original crop aspect ratio at no more than 2× scale.
+Room 2 uses the supplied `assets/controls/control_bg.png` and optional `assets/controls/control_online_bg.png`. The background is drawn in the fixed 1680×945 room view. Hotspot rectangles in `assets/data/room2.json` are normalized fractions from the source image's top-left; overlapping rectangles select the smallest area. The crop viewer converts those same source coordinates to the texture's bottom-left origin and keeps the original crop aspect ratio at no more than 2× scale.
 
-Edit the cabinet answer, attacker IP, distinct port count, service mappings, camera times, and exit code in `assets/data/puzzles3.json`. Edit the three hint tiers in `assets/data/hints3.json`. The F1 overlay shows hotspot ids and source coordinates; F2 reloads the Room 3 definition and puzzle data; F3 assists with the currently open puzzle; F4 enables hotspot move/edit mode and Ctrl+S saves the JSON; F5 shows network diagnostics. Co-op clues are assigned by role in `assets/data/room3.json` and enabled by `assets/data/coop.json`.
+Edit the cabinet answer, attacker IP, distinct port count, service mappings, camera times, and exit code in `assets/data/puzzles2.json`. Edit the three hint tiers in `assets/data/hints2.json`. The F1 overlay shows hotspot ids and source coordinates; F2 reloads the Room 2 definition and puzzle data; F3 assists with the currently open puzzle; F4 enables hotspot move/edit mode and Ctrl+S saves the JSON; F5 shows network diagnostics. Co-op clues are assigned by role in `assets/data/room2.json` and enabled by `assets/data/coop.json`.
 
-Run the logic and LAN loopback tests with `gradle test`. They cover the Room 3 puzzle rules and a complete two-peer solve through the host-authoritative intent protocol.
+Run the logic and LAN loopback tests with `gradle test`. They cover the Room 2 puzzle rules and a complete two-peer solve through the host-authoritative intent protocol.
 
 ## Ending Story Sequence
 
-After successfully escaping Room 3, the game transitions to a cinematic **Ending Story Sequence** before displaying the final **ESCAPE COMPLETE** summary screen.
+After successfully escaping Room 2, the game transitions to a cinematic **Ending Story Sequence** before displaying the final **ESCAPE COMPLETE** summary screen.
 
 ### Architecture & System Reuse
 The ending sequence reuses the core story engine (`StoryScreen`, `StoryDirector`, `TypewriterText`, `CameraMove`, `LetterboxBars`, `SkipHold`, `StoryAudio`) without duplicating screen classes:
@@ -76,7 +76,7 @@ The ending sequence reuses the core story engine (`StoryScreen`, `StoryDirector`
 - **Fail-safe fallback**: If any ending panel image or font is missing, `StoryScreen` logs an error specifying the missing file and skips directly to the `ESCAPE COMPLETE` screen. Missing audio clips are skipped silently with a single log line.
 
 ### Triggering the Ending
-- **Solo Escape**: Entering the correct 4-digit code (`6742`) on the Room 3 exit keypad displays the "Door unlocked" toast, writes `room: "complete"` to `saves/progress.json`, fades Room 3 to black over 0.5s, stops the alarm, and launches the ending sequence.
+- **Solo Escape**: Entering the correct 4-digit code (`6742`) on the Room 2 exit keypad displays the "Door unlocked" toast, writes `room: "complete"` to `saves/progress.json`, fades Room 2 to black over 0.5s, stops the alarm, and launches the ending sequence.
 - **LAN Co-op**: When the host validates the exit keypad submission, KryoNet broadcasts the `EndingStart` game event. Both players fade into the ending sequence with independent pacing and skip controls, synchronizing at the final `ESCAPE COMPLETE` screen.
 - **Watch Ending Again (Solo)**: The `ESCAPE COMPLETE` screen features a "WATCH ENDING AGAIN" button (solo only) to replay the ending without resetting game progress.
 - **Landing Settings**: The Settings dialog contains a "REPLAY ENDING" button next to "REPLAY STORY", returning directly to Settings when finished.
@@ -134,4 +134,3 @@ The ending sequence reuses the core story engine (`StoryScreen`, `StoryDirector`
 - **F1**: Toggle debug overlay with live normalized mouse position.
 - **F2**: Live-reload `assets/data/ending.json` from disk and restart the current panel without restarting the game.
 - **F3**: Instantly skip to the next panel.
-

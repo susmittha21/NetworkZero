@@ -15,7 +15,6 @@ public final class ProgressStore {
         JsonObject first=new JsonObject();first.addProperty("time",room1Time);first.addProperty("hints",room1Hints);first.addProperty("score",room1Score);root.add("room1",first);
         JsonObject last=new JsonObject();last.addProperty("time",room2Time);last.addProperty("hints",room2Hints);last.addProperty("score",room2Score);
         root.add("room2",last);
-        root.add("room3",last);
         Files.createDirectories(progressFile.getParent());Files.writeString(progressFile,new GsonBuilder().setPrettyPrinting().create().toJson(root));
     }
 }

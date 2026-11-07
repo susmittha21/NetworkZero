@@ -17,7 +17,6 @@ public final class RoomDefinition {
 
     public static RoomDefinition loadRoom2() {
         String file="data/room2.json";
-        if (!Gdx.files.internal(file).exists()) file="data/room3.json";
         try {
             if (!Gdx.files.internal(file).exists()) throw new IllegalStateException("Required room definition missing: assets/"+file);
             RoomDefinition d=new Gson().fromJson(Gdx.files.internal(file).readString("UTF-8"),RoomDefinition.class);
@@ -30,9 +29,6 @@ public final class RoomDefinition {
         }catch(RuntimeException e){throw e;}catch(Exception e){throw new IllegalStateException("Could not load assets/"+file,e);}
     }
 
-    public static RoomDefinition loadRoom3() {
-        return loadRoom2();
-    }
     private static RoomObject find(RoomDefinition d,String id){for(RoomObject o:d.objects)if(id.equals(o.id))return o;throw new IllegalStateException("Missing Room 2 hotspot: "+id);}
     private static boolean overlaps(RoomObject a,RoomObject b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;}
 }

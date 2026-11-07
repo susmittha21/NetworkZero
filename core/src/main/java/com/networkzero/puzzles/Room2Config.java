@@ -16,7 +16,6 @@ public final class Room2Config {
     public static synchronized void load(){
         try{
             String file="data/puzzles2.json";
-            if(!Gdx.files.internal(file).exists())file="data/puzzles3.json";
             if(!Gdx.files.internal(file).exists())throw new IllegalStateException("Required puzzle data missing: assets/"+file);
             JsonObject j=new Gson().fromJson(Gdx.files.internal(file).readString("UTF-8"),JsonObject.class);
             cabinet=j.get("cabinetCode").getAsString();
@@ -26,7 +25,6 @@ public final class Room2Config {
             if(j.has("tamperedCamera"))camera=j.get("tamperedCamera").getAsInt();
             ports=new Gson().fromJson(j.get("servicePorts"),new TypeToken<Map<String,String>>(){}.getType());
             String hf="data/hints2.json";
-            if(!Gdx.files.internal(hf).exists())hf="data/hints3.json";
             if(!Gdx.files.internal(hf).exists())throw new IllegalStateException("Required hint data missing: assets/"+hf);
             JsonObject hj=new Gson().fromJson(Gdx.files.internal(hf).readString("UTF-8"),JsonObject.class);
             java.util.LinkedHashMap<String,String[]> parsed=new java.util.LinkedHashMap<>();

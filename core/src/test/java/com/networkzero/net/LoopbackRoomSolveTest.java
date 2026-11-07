@@ -11,31 +11,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LoopbackRoomSolveTest {
     @Test void twoPeersCompleteRoomThreeThroughHostValidatedIntents() throws Exception {
-        GameState hostState=new GameState(),clientState=new GameState();hostState.beginRoom3();IntentHandler rules=new IntentHandler();CountDownLatch welcomed=new CountDownLatch(1);AtomicInteger syncs=new AtomicInteger();
+        GameState hostState=new GameState(),clientState=new GameState();hostState.beginRoom2();IntentHandler rules=new IntentHandler();CountDownLatch welcomed=new CountDownLatch(1);AtomicInteger syncs=new AtomicInteger();
         java.util.List<Network.GameEvent> hostEvents=new java.util.concurrent.CopyOnWriteArrayList<>();
         java.util.List<Network.GameEvent> clientEvents=new java.util.concurrent.CopyOnWriteArrayList<>();
         LoopbackPorts ports=LoopbackPorts.findAvailable();GameServer server=new GameServer("Host",ports.tcp(),ports.udp(),()->hostState,new GameServer.Handler(){public void onConnected(String p){}public void onDisconnected(String p){}public void onMessage(Object message){if(message instanceof Network.Intent i){IntentHandler.Result r=rules.apply(hostState,i,"Client");if(!r.event().isEmpty()){Network.GameEvent ev=new Network.GameEvent(r.event(),"Client");serverRef[0].send(ev);hostEvents.add(ev);}serverRef[0].sync();}}});serverRef[0]=server;
         GameClient client=new GameClient(new GameClient.Handler(){public void onDisconnected(){}public void onMessage(Object m){if(m instanceof Network.Welcome)welcomed.countDown();if(m instanceof Network.StateSync s){clientState.copyFrom(new Gson().fromJson(s.stateJson,GameState.class));syncs.incrementAndGet();}if(m instanceof Network.GameEvent e)clientEvents.add(e);}});
         try {
-            server.start();client.start();client.connect("127.0.0.1",ports.tcp(),ports.udp(),"Client",4000);assertTrue(welcomed.await(5,TimeUnit.SECONDS),"Room 3 handshake timed out");
+            server.start();client.start();client.connect("127.0.0.1",ports.tcp(),ports.udp(),"Client",4000);assertTrue(welcomed.await(5,TimeUnit.SECONDS),"Room 2 handshake timed out");
             send(client,hostState,clientState,syncs,intent(Network.Intent.Type.OPEN_PANEL,"cabinet"));
             for(int n=0;n<3;n++){Network.Intent dial=new Network.Intent(Network.Intent.Type.DIAL_SET);dial.i=n;dial.j=new int[]{3,1,7}[n];send(client,hostState,clientState,syncs,dial);}
             send(client,hostState,clientState,syncs,new Network.Intent(Network.Intent.Type.DRAWER_OPEN));send(client,hostState,clientState,syncs,new Network.Intent(Network.Intent.Type.TAKE_KEYCARD));send(client,hostState,clientState,syncs,intent(Network.Intent.Type.CLOSE_PANEL,"cabinet"));
             send(client,hostState,clientState,syncs,intent(Network.Intent.Type.OPEN_PANEL,"log_archive"));Network.Intent log=intent(Network.Intent.Type.LOG_SUBMIT,"10.20.30.77");log.i=7;send(client,hostState,clientState,syncs,log);send(client,hostState,clientState,syncs,intent(Network.Intent.Type.CLOSE_PANEL,"log_archive"));
             send(client,hostState,clientState,syncs,intent(Network.Intent.Type.OPEN_PANEL,"service_register"));for(var pair:com.networkzero.puzzles.ServiceRegisterMatcher.ANSWER.entrySet()){Network.Intent p=intent(Network.Intent.Type.REGISTER_PAIR,pair.getKey());p.b=pair.getValue();send(client,hostState,clientState,syncs,p);}send(client,hostState,clientState,syncs,new Network.Intent(Network.Intent.Type.REGISTER_CHECK));send(client,hostState,clientState,syncs,intent(Network.Intent.Type.CLOSE_PANEL,"service_register"));
             send(client,hostState,clientState,syncs,intent(Network.Intent.Type.OPEN_PANEL,"cctv_wall"));Network.Intent camera=new Network.Intent(Network.Intent.Type.CCTV_FLAG);camera.i=6;send(client,hostState,clientState,syncs,camera);send(client,hostState,clientState,syncs,intent(Network.Intent.Type.CLOSE_PANEL,"cctv_wall"));
-            send(client,hostState,clientState,syncs,intent(Network.Intent.Type.OPEN_PANEL,"terminal3"));send(client,hostState,clientState,syncs,intent(Network.Intent.Type.TERMINAL_COMMAND,"block 10.20.30.77"));send(client,hostState,clientState,syncs,intent(Network.Intent.Type.TERMINAL_COMMAND,"release"));
+            send(client,hostState,clientState,syncs,intent(Network.Intent.Type.OPEN_PANEL,"terminal2"));send(client,hostState,clientState,syncs,intent(Network.Intent.Type.TERMINAL_COMMAND,"block 10.20.30.77"));send(client,hostState,clientState,syncs,intent(Network.Intent.Type.TERMINAL_COMMAND,"release"));
             Network.Intent hostConfirm=intent(Network.Intent.Type.DOOR_CONFIRM,"host");hostConfirm.i=1;int before=syncs.get();assertTrue(rules.apply(hostState,hostConfirm,"Host").accepted());server.sync();awaitSync(syncs,before);
             Network.Intent clientConfirm=intent(Network.Intent.Type.DOOR_CONFIRM,"client");clientConfirm.i=1;send(client,hostState,clientState,syncs,clientConfirm);send(client,hostState,clientState,syncs,intent(Network.Intent.Type.OPEN_PANEL,"exit_keypad"));send(client,hostState,clientState,syncs,intent(Network.Intent.Type.KEYPAD_SUBMIT,"6742"));
             assertTrue(hostEvents.stream().anyMatch(e->"EndingStart".equals(e.name)),"Host must receive EndingStart event");
             assertTrue(clientEvents.stream().anyMatch(e->"EndingStart".equals(e.name)),"Client must receive EndingStart event");
-            assertTrue(hostState.room3Complete,"Host state must be complete");
-            assertTrue(clientState.room3Complete,"Client state must be complete");
+            assertTrue(hostState.room2Complete,"Host state must be complete");
+            assertTrue(clientState.room2Complete,"Client state must be complete");
             assertSameState(hostState,clientState);
 
             java.nio.file.Path progressFile=com.networkzero.engine.ProfilePaths.saves().resolve("progress.json");
             java.nio.file.Files.deleteIfExists(progressFile);
-            com.networkzero.engine.ProgressStore.writeComplete(progressFile,600,0,1000,2700-hostState.room3SecondsLeft,hostState.room3Hints,hostState.room3Score);
+            com.networkzero.engine.ProgressStore.writeComplete(progressFile,600,0,1000,2700-hostState.room2SecondsLeft,hostState.room2Hints,hostState.room2Score);
             String progressContent=java.nio.file.Files.readString(progressFile);
             int first=progressContent.indexOf("\"room\": \"complete\"");
             assertTrue(first>=0,"progress.json must contain \"room\": \"complete\"");

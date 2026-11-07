@@ -48,8 +48,8 @@ public final class RoomSummaryScreen implements Screen {
                 if (p.y >= 290 && p.y <= 400) {
                     if (p.x >= 350 && p.x <= 750) {
                         com.networkzero.room.GameState next = new com.networkzero.room.GameState();
-                        next.beginRoom3();
-                        game.setScreen(new Room3Screen(game, new com.networkzero.session.LocalSession(next, "Player", null), false));
+                        next.beginRoom2();
+                        game.setScreen(new Room2Screen(game, new com.networkzero.session.LocalSession(next, "Player", null), false));
                     } else if (p.x >= 760 && p.x <= 1160) {
                         game.setScreen(new RoomScreen(game, false));
                     } else if (p.x >= 1170 && p.x <= 1570) {

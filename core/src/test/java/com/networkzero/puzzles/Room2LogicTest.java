@@ -7,6 +7,7 @@ import com.networkzero.session.CoopRules;
 import com.networkzero.engine.ProgressStore;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.api.Test;
 import java.nio.file.Files;
@@ -14,13 +15,23 @@ import java.nio.file.Path;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
-class Room3LogicTest {
+class Room2LogicTest {
     @Test void finalProgressFileMarksTheGameComplete(@TempDir Path temp) throws Exception {
         Path progress=temp.resolve("saves").resolve("progress.json");ProgressStore.writeComplete(progress,900,1,740,1200,0,1000);
         JsonObject saved=JsonParser.parseString(Files.readString(progress)).getAsJsonObject();
         assertEquals("complete",saved.get("room").getAsString());assertTrue(saved.get("storySeen").getAsBoolean());
         assertEquals(900,saved.getAsJsonObject("room1").get("time").getAsInt());
-        assertEquals(1200,saved.getAsJsonObject("room3").get("time").getAsInt());
+        assertEquals(1200,saved.getAsJsonObject("room2").get("time").getAsInt());
+        assertFalse(saved.has("room3"));
+    }
+    @Test void previousRoomNamesLoadIntoTheRoom2State() {
+        GameState saved=new Gson().fromJson("{\"roomNumber\":3,\"room3SecondsLeft\":1200,\"room3Complete\":true,\"hintTiers\":{\"r3_P1\":2}}",GameState.class);
+        saved.migrateLegacyRoom2State();
+        assertEquals(2,saved.roomNumber);
+        assertEquals(1200,saved.room2SecondsLeft);
+        assertTrue(saved.room2Complete);
+        assertEquals(2,saved.hintTiers.get("r2_P1"));
+        assertFalse(new Gson().toJson(saved).contains("room3"));
     }
     @Test void packetLogChecksIpAndTrimmedDistinctPortCount() {
         assertTrue(LogChecker.check(" 10.20.30.77 ", " 7 ").correct());
@@ -39,19 +50,19 @@ class Room3LogicTest {
     }
 
     @Test void terminalValidatesEveryBlockAndReleaseGate() {
-        assertEquals("Invalid address.", TerminalInterpreter3.execute("block 999.1.1.1",false,false,false,false,false).output());
-        assertEquals("Evidence incomplete. Analyse the packet log first.", TerminalInterpreter3.execute("block 10.20.30.77",false,false,false,false,false).output());
-        assertEquals("No malicious traffic from that address. Block rejected.", TerminalInterpreter3.execute("block 10.20.30.12",true,false,false,false,false).output());
-        assertTrue(TerminalInterpreter3.execute("block 10.20.30.77",true,false,false,false,false).attackerBlocked());
-        assertEquals("Cannot release: threat still active.", TerminalInterpreter3.execute("release",false,false,false,false,false).output());
-        assertEquals("Cannot release: camera integrity not verified.", TerminalInterpreter3.execute("release",true,true,false,true,false).output());
-        assertEquals("Cannot release: service register not verified.", TerminalInterpreter3.execute("release",true,true,true,false,false).output());
-        assertTrue(TerminalInterpreter3.execute(" release ",true,true,true,true,false).lockdownReleased());
-        for(String bad : new String[]{"1.2.3", "256.1.1.1", "1.2.3.04", "a.b.c.d"}) assertFalse(TerminalInterpreter3.validIpv4(bad),bad);
+        assertEquals("Invalid address.", TerminalInterpreter2.execute("block 999.1.1.1",false,false,false,false,false).output());
+        assertEquals("Evidence incomplete. Analyse the packet log first.", TerminalInterpreter2.execute("block 10.20.30.77",false,false,false,false,false).output());
+        assertEquals("No malicious traffic from that address. Block rejected.", TerminalInterpreter2.execute("block 10.20.30.12",true,false,false,false,false).output());
+        assertTrue(TerminalInterpreter2.execute("block 10.20.30.77",true,false,false,false,false).attackerBlocked());
+        assertEquals("Cannot release: threat still active.", TerminalInterpreter2.execute("release",false,false,false,false,false).output());
+        assertEquals("Cannot release: camera integrity not verified.", TerminalInterpreter2.execute("release",true,true,false,true,false).output());
+        assertEquals("Cannot release: service register not verified.", TerminalInterpreter2.execute("release",true,true,true,false,false).output());
+        assertTrue(TerminalInterpreter2.execute(" release ",true,true,true,true,false).lockdownReleased());
+        for(String bad : new String[]{"1.2.3", "256.1.1.1", "1.2.3.04", "a.b.c.d"}) assertFalse(TerminalInterpreter2.validIpv4(bad),bad);
     }
 
-    @Test void room3IntentFlowValidatesDialLocksAndDualConfirmation() {
-        IntentHandler handler=new IntentHandler(); GameState s=new GameState();s.beginRoom3();
+    @Test void room2IntentFlowValidatesDialLocksAndDualConfirmation() {
+        IntentHandler handler=new IntentHandler(); GameState s=new GameState();s.beginRoom2();
         assertTrue(handler.apply(s,intent(Network.Intent.Type.OPEN_PANEL,"cabinet"),"Host").accepted());
         for(int d=0;d<3;d++){Network.Intent set=new Network.Intent(Network.Intent.Type.DIAL_SET);set.i=d;set.j=new int[]{3,1,7}[d];assertTrue(handler.apply(s,set,"Host").accepted());}
         assertTrue(handler.apply(s,new Network.Intent(Network.Intent.Type.DRAWER_OPEN),"Host").accepted());
@@ -66,15 +77,15 @@ class Room3LogicTest {
         assertTrue(handler.apply(s,intent(Network.Intent.Type.OPEN_PANEL,"cctv_wall"),"Host").accepted());
         Network.Intent camera=new Network.Intent(Network.Intent.Type.CCTV_FLAG);camera.i=6;assertTrue(handler.apply(s,camera,"Host").accepted());
         assertTrue(handler.apply(s,intent(Network.Intent.Type.CLOSE_PANEL,"cctv_wall"),"Host").accepted());
-        assertTrue(handler.apply(s,intent(Network.Intent.Type.OPEN_PANEL,"terminal3"),"Host").accepted());
+        assertTrue(handler.apply(s,intent(Network.Intent.Type.OPEN_PANEL,"terminal2"),"Host").accepted());
         assertTrue(handler.apply(s,intent(Network.Intent.Type.TERMINAL_COMMAND,"block 10.20.30.77"),"Host").accepted());
         assertTrue(handler.apply(s,intent(Network.Intent.Type.TERMINAL_COMMAND,"release"),"Host").accepted());
-        assertFalse(s.room3Complete);
+        assertFalse(s.room2Complete);
         Network.Intent confirm=intent(Network.Intent.Type.DOOR_CONFIRM,"host");confirm.i=1;assertTrue(handler.apply(s,confirm,"Host").accepted());
         confirm=intent(Network.Intent.Type.DOOR_CONFIRM,"client");confirm.i=1;assertTrue(handler.apply(s,confirm,"Client").accepted());
         assertTrue(handler.apply(s,intent(Network.Intent.Type.OPEN_PANEL,"exit_keypad"),"Host").accepted());
         assertTrue(handler.apply(s,intent(Network.Intent.Type.KEYPAD_SUBMIT,"6742"),"Host").accepted());
-        assertTrue(s.room3Complete);
+        assertTrue(s.room2Complete);
     }
 
     @Test void clueOwnershipIsConfiguredByRoleAndSoloHasFullAccess() {
@@ -83,7 +94,7 @@ class Room3LogicTest {
         assertTrue(CoopRules.canOpen(3,true,"plant"));
     }
     @Test void cctvFlagValidatesTamperedCameraAndRejectsOthers() {
-        IntentHandler handler=new IntentHandler(); GameState s=new GameState();s.beginRoom3();
+        IntentHandler handler=new IntentHandler(); GameState s=new GameState();s.beginRoom2();
         assertTrue(handler.apply(s,intent(Network.Intent.Type.OPEN_PANEL,"cctv_wall"),"Host").accepted());
         Network.Intent wrongCam=new Network.Intent(Network.Intent.Type.CCTV_FLAG);wrongCam.i=8;
         IntentHandler.Result wrongRes=handler.apply(s,wrongCam,"Host");
