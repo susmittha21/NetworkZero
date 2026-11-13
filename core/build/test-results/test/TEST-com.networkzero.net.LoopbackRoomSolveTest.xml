@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.networkzero.net.LoopbackRoomSolveTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-28T10:58:51.538Z" hostname="LAPTOP-FDPH024O" time="1.113">
+<testsuite name="com.networkzero.net.LoopbackRoomSolveTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-07T07:30:03.921Z" hostname="LIFE" time="0.897">
   <properties/>
-  <testcase name="twoPeersCompleteRoomThreeThroughHostValidatedIntents()" classname="com.networkzero.net.LoopbackRoomSolveTest" time="0.545"/>
-  <testcase name="twoPeersCompleteRoomOneFromHostState()" classname="com.networkzero.net.LoopbackRoomSolveTest" time="0.565"/>
+  <testcase name="twoPeersCompleteRoomThreeThroughHostValidatedIntents()" classname="com.networkzero.net.LoopbackRoomSolveTest" time="0.421"/>
+  <testcase name="twoPeersCompleteRoomOneFromHostState()" classname="com.networkzero.net.LoopbackRoomSolveTest" time="0.473"/>
   <system-out><![CDATA[00:00  INFO: [kryonet] Server opened.
-00:00  INFO: Connecting: /127.0.0.1:55156/58697
+00:00  INFO: Connecting: /127.0.0.1:57585/51201
 00:00  INFO: [kryonet] Connection 1 connected: /127.0.0.1
 00:00  INFO: [kryonet] Connection 1 connected: /127.0.0.1
 00:00  INFO: [kryonet] Connection 1 disconnected.
 00:00  INFO: [kryonet] Connection 1 disconnected.
 00:00  INFO: [kryonet] Server closed.
 00:00  INFO: [kryonet] Server opened.
-00:00  INFO: Connecting: /127.0.0.1:55158/58699
+00:00  INFO: Connecting: /127.0.0.1:57587/51203
 00:00  INFO: [kryonet] Connection 1 connected: /127.0.0.1
 00:00  INFO: [kryonet] Connection 1 connected: /127.0.0.1
 00:01  INFO: [kryonet] Connection 1 disconnected.

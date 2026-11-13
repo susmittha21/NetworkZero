@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.networkzero.puzzles.Room2LogicTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-07T07:30:04.843Z" hostname="LIFE" time="0.033">
+  <properties/>
+  <testcase name="previousRoomNamesLoadIntoTheRoom2State()" classname="com.networkzero.puzzles.Room2LogicTest" time="0.002"/>
+  <testcase name="terminalValidatesEveryBlockAndReleaseGate()" classname="com.networkzero.puzzles.Room2LogicTest" time="0.001"/>
+  <testcase name="room2IntentFlowValidatesDialLocksAndDualConfirmation()" classname="com.networkzero.puzzles.Room2LogicTest" time="0.001"/>
+  <testcase name="cctvFlagValidatesTamperedCameraAndRejectsOthers()" classname="com.networkzero.puzzles.Room2LogicTest" time="0.001"/>
+  <testcase name="registerAndCameraOnlyAcceptExpectedAnswer()" classname="com.networkzero.puzzles.Room2LogicTest" time="0.001"/>
+  <testcase name="packetLogChecksIpAndTrimmedDistinctPortCount()" classname="com.networkzero.puzzles.Room2LogicTest" time="0.002"/>
+  <testcase name="finalProgressFileMarksTheGameComplete(Path)" classname="com.networkzero.puzzles.Room2LogicTest" time="0.018"/>
+  <testcase name="clueOwnershipIsConfiguredByRoleAndSoloHasFullAccess()" classname="com.networkzero.puzzles.Room2LogicTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

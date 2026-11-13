@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.networkzero.session.GameSessionTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-28T10:58:52.735Z" hostname="LAPTOP-FDPH024O" time="0.007">
+<testsuite name="com.networkzero.session.GameSessionTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-07T07:30:04.877Z" hostname="LIFE" time="0.198">
   <properties/>
   <testcase name="asymmetricCluesAreRoleSpecificAndCanBeDisabled()" classname="com.networkzero.session.GameSessionTest" time="0.001"/>
+  <testcase name="playerActivityIsRelayedToBothChatTranscripts()" classname="com.networkzero.session.GameSessionTest" time="0.19"/>
   <testcase name="hostIntentMutatesStateOnce()" classname="com.networkzero.session.GameSessionTest" time="0.001"/>
   <testcase name="puzzleLocksAreExclusiveAndReleased()" classname="com.networkzero.session.GameSessionTest" time="0.002"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
+  <system-out><![CDATA[00:01  INFO: [kryonet] Server opened.
+00:01  INFO: Connecting: /127.0.0.1:57589/51205
+00:01  INFO: [kryonet] Connection 1 connected: /127.0.0.1
+00:01  INFO: [kryonet] Connection 1 connected: /127.0.0.1
+00:01  INFO: [kryonet] Connection 1 disconnected.
+00:01  INFO: [kryonet] Connection 1 disconnected.
+00:01  INFO: [kryonet] Server closed.
+]]></system-out>
+  <system-err><![CDATA[SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+]]></system-err>
 </testsuite>
