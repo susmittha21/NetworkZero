@@ -18,7 +18,7 @@ public final class GameState {
     public final Map<String,Integer> hintTiers=new HashMap<>();
     /** Puzzle id to owning player name; empty/missing means unlocked. */
     public final Map<String,String> lockOwner=new HashMap<>();
-    public String ip="",mask="",gateway="", terminalText="", roomMessage="",pausedBy="";
+    public String ip="",mask="",gateway="", terminalText="NETWORK TERMINAL v1.0\nType help for commands.", roomMessage="",pausedBy="";
 
     // Room 2 state is kept in the same host-authoritative snapshot as Room 1.
     @SerializedName(value="room2SecondsLeft", alternate={"room3SecondsLeft"})

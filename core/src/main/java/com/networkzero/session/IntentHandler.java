@@ -25,7 +25,7 @@ public final class IntentHandler {
         case WHITEBOARD_PLACE->{if(!owns(s,"topology",player))return Result.reject("Open the whiteboard first.");if(in.i<0||in.i>=4||!Set.of(BOARD_ANSWER).contains(in.a))return Result.reject("Invalid device placement.");s.board[in.i]=in.a;return Result.ok();}
         case WHITEBOARD_RETURN->{if(!owns(s,"topology",player))return Result.reject("Open the whiteboard first.");if(in.i<0||in.i>=4)return Result.reject("Invalid board slot.");s.board[in.i]="";return Result.ok();}
         case SUBMIT_WHITEBOARD->{if(!owns(s,"topology",player))return Result.reject("Open the whiteboard first.");if(!Arrays.equals(s.board,BOARD_ANSWER))return Result.reject("The topology is not correct.");s.boardSolved=true;s.solved.add("P6");return new Result(true,"","WhiteboardSolved");}
-        case TERMINAL_COMMAND->{if(s.roomNumber==2)return terminal2(s,in.a,player);if(!owns(s,"terminal",player))return Result.reject("Open the terminal first.");String[] p=in.a.trim().split("\\s+",3);if(p.length==3&&p[0].equalsIgnoreCase("set")){switch(p[1].toLowerCase(Locale.ROOT)){case "ip"->s.ip=p[2];case "mask"->s.mask=p[2];case "gateway"->s.gateway=p[2];default->{return Result.reject("Unknown setting.");}}return Result.ok();}if(p.length>=2&&p[0].equalsIgnoreCase("ping")&&s.routerOnline&&s.ip.equals("192.168.1.30")&&s.mask.equals("255.255.255.0")&&s.gateway.equals("192.168.1.1")&&p[1].equals(s.gateway)){s.pcSolved=true;s.solved.add("P7");return new Result(true,"","TerminalSolved");}return Result.ok();}
+        case TERMINAL_COMMAND->{if(s.roomNumber==2)return terminal2(s,in.a,player);return terminal1(s,in.a,player);}
         case KEYPAD_SUBMIT->{if(s.roomNumber==2){if(!owns(s,"exit_keypad",player))return Result.reject("Open the exit keypad first.");if(!s.lockdownReleased)return Result.reject("The lock is sealed. The lockdown is still active.");if(!s.doorConfirmHost||!s.doorConfirmClient)return Result.reject("Both operators must confirm first.");if(Room2Config.doorCode().equals(in.a)){s.room2Complete=true;s.roomComplete=true;return new Result(true,"","EndingStart");}return Result.reject("Wrong code.");}if(!owns(s,"keypad",player))return Result.reject("Open the exit keypad first.");if(!s.pcSolved)return Result.reject("The door is network-locked.");if("2791".equals(in.a)){s.roomComplete=true;return new Result(true,"","RoomComplete");}return Result.reject("Wrong code.");}
         case DIAL_SET->{if(s.roomNumber!=2||!owns(s,"cabinet",player))return Result.reject("Open the locked cabinet first.");if(in.i<0||in.i>2||in.j<0||in.j>9)return Result.reject("Invalid dial setting.");s.dialDigits[in.i]=in.j;return Result.ok();}
         case DRAWER_OPEN->{if(s.roomNumber!=2||!owns(s,"cabinet",player))return Result.reject("Open the locked cabinet first.");if(s.dialDigits[0]*100+s.dialDigits[1]*10+s.dialDigits[2]!=Integer.parseInt(Room2Config.cabinetCode()))return Result.reject("The lock does not open.");s.drawerOpen=true;return new Result(true,"","CabinetOpened");}
@@ -42,6 +42,50 @@ public final class IntentHandler {
     }return Result.reject("Unsupported action.");}
     private static boolean sameLinks(List<int[]> actual,int[][] expected){if(actual.size()!=expected.length)return false;boolean[] used=new boolean[actual.size()];for(int[] e:expected){boolean found=false;for(int i=0;i<actual.size();i++){int[] a=actual.get(i);if(!used[i]&&((a[0]==e[0]&&a[1]==e[1])||(a[0]==e[1]&&a[1]==e[0]))){used[i]=true;found=true;break;}}if(!found)return false;}return true;}
     private static boolean owns(GameState s,String puzzle,String player){return Objects.equals(s.lockOwner.get(puzzle),player);}
+    private Result terminal1(GameState s,String command,String player){
+        if(!owns(s,"terminal",player))return Result.reject("Open the terminal first.");
+        String trimmed=command==null?"":command.trim();
+        if(trimmed.isEmpty())return Result.ok();
+        if(trimmed.equalsIgnoreCase("clear")){s.terminalText="";return Result.ok();}
+        String[] parts=trimmed.split("\\s+",3);
+        String output;
+        boolean solved=false;
+        if(parts[0].equalsIgnoreCase("help")){
+            output="help, ipconfig, set ip <address>, set mask <mask>, set gateway <address>, ping <address>, mail, clear";
+        }else if(parts[0].equalsIgnoreCase("ipconfig")){
+            output="IP: "+terminalValue(s.ip)+"\nMASK: "+terminalValue(s.mask)+"\nGATEWAY: "+terminalValue(s.gateway);
+        }else if(parts[0].equalsIgnoreCase("set")&&parts.length==3){
+            switch(parts[1].toLowerCase(Locale.ROOT)){
+                case "ip"->{s.ip=parts[2];output="OK";}
+                case "mask"->{s.mask=parts[2];output="OK";}
+                case "gateway"->{s.gateway=parts[2];output="OK";}
+                default->output="Unknown setting.";
+            }
+        }else if(parts[0].equalsIgnoreCase("ping")){
+            String target=parts.length>1?parts[1]:"";
+            if(!s.routerOnline)output="Network adapter: no link.";
+            else if(s.ip.isEmpty()||s.mask.isEmpty()||s.gateway.isEmpty())output="Configure ip, mask and gateway first.";
+            else if(!target.equals(s.gateway))output="Request timed out.";
+            else if(!s.ip.equals("192.168.1.30"))output="Destination unreachable. Check your IP address.";
+            else if(!s.mask.equals("255.255.255.0"))output="Destination unreachable. Check your subnet mask.";
+            else if(!s.gateway.equals("192.168.1.1"))output="Destination unreachable. Check your gateway.";
+            else{
+                output="Reply from 192.168.1.1: bytes=32 time<1ms\n".repeat(4)+"Ping successful. You have mail.";
+                s.pcSolved=true;
+                s.solved.add("P7");
+                solved=true;
+            }
+        }else if(parts[0].equalsIgnoreCase("mail")){
+            output=s.pcSolved
+                    ?"From: sysadmin\nSubject: Door code\nThe exit door code has 4 digits.\nEnter: the LEFT whiteboard digit, then 7, then the RIGHT whiteboard digit, then the router NODE ID."
+                    :"No mail.";
+        }else{
+            output="Unknown command. Type help.";
+        }
+        s.terminalText=(s.terminalText+"\n> "+trimmed+"\n"+output).trim();
+        return solved?new Result(true,"","TerminalSolved"):Result.ok();
+    }
+    private static String terminalValue(String value){return value==null||value.isEmpty()?"not set":value;}
     private Result terminal2(GameState s,String command,String player){if(!owns(s,"terminal2",player))return Result.reject("Open the control terminal first.");if(!s.keycardTaken)return Result.reject("Keycard required. Find the operator keycard.");String trimmed=command==null?"":command.trim();TerminalInterpreter2.Result r=TerminalInterpreter2.execute(trimmed,s.logSolved,s.attackerBlocked,s.cctvSolved,s.portsSolved,s.lockdownReleased);s.attackerBlocked=r.attackerBlocked();s.lockdownReleased=r.lockdownReleased();if(!trimmed.equalsIgnoreCase("clear")&&!trimmed.isBlank())s.terminalBuffer=(s.terminalBuffer+"\n> "+trimmed+"\n"+r.output()).trim();if(trimmed.equalsIgnoreCase("clear"))s.terminalBuffer="";if(r.output().contains("isolated"))return new Result(true,"","AttackerBlocked");if(r.lockdownReleased()&&!s.solved.contains("R2_RELEASE")){s.solved.add("R2_RELEASE");return new Result(true,"","LockdownReleased");}return r.output().startsWith("Cannot release")||r.output().startsWith("Invalid")||r.output().startsWith("No malicious")||r.output().startsWith("Evidence")?Result.reject(r.output()):Result.ok();}
 
     private static boolean portUsed(GameState s,int p){for(int[] l:s.links)if(l[0]==p||l[1]==p)return true;return false;}
