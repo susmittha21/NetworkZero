@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 /** Shared wire protocol and Kryo registration for both LAN peers. */
 public final class Network {
     public static final int TCP_PORT = 54555, UDP_PORT = 54777;
+    public static final int CONNECT_TIMEOUT_MS = 15_000;
     public static final String GAME_VERSION = "1";
     public static final Gson JSON = new Gson();
     private Network() {}
